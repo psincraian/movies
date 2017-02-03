@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements
 
         mListMovies = (RecyclerView) findViewById(R.id.rv_list_movies);
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        final int columns = getResources().getInteger(R.integer.movies_per_row);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, columns);
         mListMovies.setLayoutManager(gridLayoutManager);
         mListMovies.setHasFixedSize(true);
         mAdapter = new MoviesAdapter(new ArrayList<Movie>(), this);
