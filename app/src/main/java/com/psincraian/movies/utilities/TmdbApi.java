@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class TmdbApi {
 
     private static final String CLASS_NAME = TmdbApi.class.getSimpleName();
-    private static final String API_KEY = "YOUT API HERE";
+    private static final String API_KEY = "8750eb6f8c8778c649a5fdf7fde047ce";
 
     public static final String TOP_MOVIES = "movie/top_rated";
     public static final String POPULAR_MOVIES = "movie/popular";

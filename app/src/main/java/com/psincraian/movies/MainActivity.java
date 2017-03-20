@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,10 +30,12 @@ public class MainActivity extends AppCompatActivity implements
         MoviesAdapter.ListItemClickListener,
         SelectMoviesDialog.SelectMoviesListener {
 
+    private static final String CLASS_NAME = MainActivity.class.getSimpleName();
+    private static final String MOVIES_FILTER_KEY = "movies_filter";
     private RecyclerView mListMovies;
     private MoviesAdapter mAdapter;
     private ProgressBar mProgressBar;
-    private int mMoviesFilter = -1;
+    private int mMoviesFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,22 @@ public class MainActivity extends AppCompatActivity implements
         mListMovies.setHasFixedSize(true);
         mAdapter = new MoviesAdapter(new ArrayList<Movie>(), this);
         mListMovies.setAdapter(mAdapter);
-        onMovieSelected(SelectMoviesDialog.POPULAR_MOVIES);
+        showMovie(mMoviesFilter);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mMoviesFilter = savedInstanceState.getInt(MOVIES_FILTER_KEY);
+        } else {
+            mMoviesFilter = 1;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(MOVIES_FILTER_KEY, mMoviesFilter);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -92,15 +110,18 @@ public class MainActivity extends AppCompatActivity implements
 
         if (option != mMoviesFilter) {
             mMoviesFilter = option;
+            showMovie(mMoviesFilter);
+        }
+    }
 
-            switch (mMoviesFilter) {
-                case SelectMoviesDialog.POPULAR_MOVIES:
-                    new QueryTask().execute(TmdbApi.POPULAR_MOVIES);
-                    break;
-                case SelectMoviesDialog.TOP_MOVIES:
-                    new QueryTask().execute(TmdbApi.TOP_MOVIES);
-                    break;
-            }
+    private void showMovie(int option) {
+        switch (option) {
+            case SelectMoviesDialog.POPULAR_MOVIES:
+                new QueryTask().execute(TmdbApi.POPULAR_MOVIES);
+                break;
+            case SelectMoviesDialog.TOP_MOVIES:
+                new QueryTask().execute(TmdbApi.TOP_MOVIES);
+                break;
         }
     }
 
@@ -116,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public class QueryTask extends AsyncTask<String, Void, List<Movie>> {
+    private class QueryTask extends AsyncTask<String, Void, List<Movie>> {
 
         @Override
         protected void onPreExecute() {
