@@ -1,4 +1,4 @@
-package com.psincraian.movies.movies;
+package com.psincraian.movies.recyclerviews.movies;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,13 +6,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.psincraian.movies.R;
+import com.psincraian.movies.recyclerviews.ListItemClickListener;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     ImageView poster;
     TextView title;
     TextView rating;
-    MoviesAdapter.ListItemClickListener listener;
+    ListItemClickListener listener;
 
     public MovieViewHolder(View itemView) {
         super(itemView);

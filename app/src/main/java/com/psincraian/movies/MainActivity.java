@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +18,8 @@ import android.widget.ProgressBar;
 
 import com.psincraian.movies.detailed.DetailedMovie;
 import com.psincraian.movies.domain.Movie;
-import com.psincraian.movies.movies.MoviesAdapter;
+import com.psincraian.movies.recyclerviews.ListItemClickListener;
+import com.psincraian.movies.recyclerviews.movies.MoviesAdapter;
 import com.psincraian.movies.utilities.SelectMoviesDialog;
 import com.psincraian.movies.utilities.TmdbApi;
 
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-        MoviesAdapter.ListItemClickListener,
+        ListItemClickListener,
         SelectMoviesDialog.SelectMoviesListener {
 
     private static final String CLASS_NAME = MainActivity.class.getSimpleName();
@@ -165,5 +165,4 @@ public class MainActivity extends AppCompatActivity implements
             mListMovies.setVisibility(View.VISIBLE);
         }
     }
-
 }

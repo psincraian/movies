@@ -1,4 +1,4 @@
-package com.psincraian.movies.movies;
+package com.psincraian.movies.recyclerviews.movies;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.psincraian.movies.R;
 import com.psincraian.movies.domain.Movie;
+import com.psincraian.movies.recyclerviews.ListItemClickListener;
 import com.psincraian.movies.utilities.TmdbApi;
 import com.squareup.picasso.Picasso;
 
@@ -20,10 +21,6 @@ public class MoviesAdapter  extends RecyclerView.Adapter<MovieViewHolder> {
     private Context context;
     final private ListItemClickListener listener;
 
-    public interface ListItemClickListener {
-        void onListItemClick(int clickedItemIndex);
-    }
-
     public MoviesAdapter(List<Movie> movies, ListItemClickListener listener)  {
         this.listener = listener;
         this.movies = new ArrayList<>(movies);
@@ -34,9 +31,8 @@ public class MoviesAdapter  extends RecyclerView.Adapter<MovieViewHolder> {
         context = viewGroup.getContext();
         int layoutIdForListItem = R.layout.movie_view_holder;
         LayoutInflater inflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentImmediately = false;
 
-        View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
+        View view = inflater.inflate(layoutIdForListItem, viewGroup, false);
         MovieViewHolder viewHolder = new MovieViewHolder(view);
         viewHolder.listener = listener;
         return viewHolder;
